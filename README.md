@@ -8,28 +8,41 @@ English | **[中文](README_zh.md)**
 
 ### Install
 
+Each skill/rule has its own config flow. Install them individually by name or number:
+
 ```bash
 # 1. Clone
 git clone https://github.com/your-username/backend-skills-rules.git
 cd backend-skills-rules
 
-# 2. Run the install wizard (generates config + deploys skills)
-python install.py
+# 2. See what's available
+python install.py --list
+
+# 3. Install specific skills/rules (by number or name)
+python install.py 1            # linux-ssh-ops (prompts for server info)
+python install.py 1 2 3 4      # install multiple at once
+python install.py git-commit   # by name
+python install.py --all        # install everything (each with its own config)
 ```
 
-The install wizard will:
-1. **Generate `config/servers.json`** — your server connection info (IPs, credentials, distros)
-2. **Deploy skills** to `~/.agents/skills/` (system-wide) or `<project>/.agents/skills/` (project-local)
-3. **Create symlinks** into your AGENTS skill directories (e.g. `~/.claude/skills/`, `.trae/skills/`)
+During install, each skill/rule runs its own config steps:
+- **linux-ssh-ops** (1) → prompts for server IPs, credentials, distros → writes `config/servers.json`
+- **sync-to-209** (2) → prompts for remote project path
+- **managing-tasks** (5), **tracking-progress** (6), **generating-reports** (7), **recording-ideas** (8) → prompts for project directory names (tasks/, logs/, reports/)
+- **work-log-prompt** (9) → prompts for log storage path
+- **AGENTS_OPS_RULES** (11) → prompts for ops directory name
+
+Then the script deploys skills to `~/.agents/` (system-wide) or `<project>/.agents/` (project-local), and creates symlinks into your agent skill directories.
 
 <details>
-<summary>⚙️ Install options</summary>
+<summary>⚙️ More install options</summary>
 
 ```bash
-python install.py                  # Full interactive install
-python install.py --config-only    # Generate config/servers.json only
-python install.py --deploy-only    # Deploy skills only (config must exist)
-python install.py --list           # List available skills
+python install.py                          # Interactive: pick from list
+python install.py 1 3 5                    # By number
+python install.py linux-ssh-ops git-commit # By name
+python install.py --all                    # Install all (each with own config)
+python install.py --list                   # List available skills/rules
 ```
 
 **Manual config**: Copy the template and edit:
@@ -42,7 +55,7 @@ cp config/servers.example.json config/servers.json
 
 ### For AI Assistants
 
-> **If you are an AI assistant** reading this README: when the user wants to install these skills, run `python install.py` from the repo root. Guide the user through the prompts. After installation, all skills will be available in the agent's skill directory via symlinks.
+> **If you are an AI assistant** reading this README: when the user wants to install these skills, first run `python install.py --list` to show available items, then `python install.py <selections>` for the ones the user wants. Each skill has its own config prompts — guide the user through them.
 
 ---
 

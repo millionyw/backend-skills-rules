@@ -8,28 +8,41 @@
 
 ### 安装
 
+每个技能/规则有独立的配置流程，按名称或序号逐个安装：
+
 ```bash
 # 1. 克隆
 git clone https://github.com/your-username/backend-skills-rules.git
 cd backend-skills-rules
 
-# 2. 运行安装向导（生成配置 + 部署技能）
-python install.py
+# 2. 查看可安装项
+python install.py --list
+
+# 3. 按序号或名称安装指定技能/规则
+python install.py 1            # linux-ssh-ops（会提示输入服务器信息）
+python install.py 1 2 3 4      # 一次安装多个
+python install.py git-commit   # 按名称
+python install.py --all        # 安装全部（逐个配置）
 ```
 
-安装向导会依次执行：
-1. **生成 `config/servers.json`** — 你的服务器连接信息（IP、凭据、发行版）
-2. **部署技能** 到 `~/.agents/skills/`（系统级）或 `<项目>/.agents/skills/`（项目级）
-3. **创建符号链接** 到 AGENTS 技能目录（如 `~/.claude/skills/`、`.trae/skills/`）
+安装时每个技能/规则会运行各自的配置步骤：
+- **linux-ssh-ops** (1) → 提示输入服务器 IP、凭据、发行版 → 写入 `config/servers.json`
+- **sync-to-209** (2) → 提示输入远程项目路径
+- **managing-tasks** (5)、**tracking-progress** (6)、**generating-reports** (7)、**recording-ideas** (8) → 提示输入项目目录名（tasks/、logs/、reports/）
+- **work-log-prompt** (9) → 提示输入日志存储路径
+- **AGENTS_OPS_RULES** (11) → 提示输入运维目录名
+
+然后脚本将技能部署到 `~/.agents/`（系统级）或 `<项目>/.agents/`（项目级），并创建符号链接到 agent 技能目录。
 
 <details>
-<summary>⚙️ 安装选项</summary>
+<summary>⚙️ 更多安装选项</summary>
 
 ```bash
-python install.py                  # 完整交互式安装
-python install.py --config-only    # 仅生成 config/servers.json
-python install.py --deploy-only    # 仅部署技能（需配置已存在）
-python install.py --list           # 列出可用技能
+python install.py                          # 交互式：从列表选择
+python install.py 1 3 5                    # 按序号
+python install.py linux-ssh-ops git-commit # 按名称
+python install.py --all                    # 安装全部（逐个配置）
+python install.py --list                   # 列出可用技能/规则
 ```
 
 **手动配置**：复制模板并编辑：
@@ -42,7 +55,7 @@ cp config/servers.example.json config/servers.json
 
 ### 给 AI 助手的指引
 
-> **如果你是 AI 助手**正在阅读本 README：当用户要求安装这些技能时，请从仓库根目录运行 `python install.py`，引导用户完成交互提示。安装完成后，所有技能将通过符号链接在 agent 的技能目录中可用。
+> **如果你是 AI 助手**正在阅读本 README：当用户要求安装这些技能时，先运行 `python install.py --list` 展示可安装项，然后按用户选择运行 `python install.py <选择项>`。每个技能有独立的配置提示，引导用户逐一完成。
 
 ---
 

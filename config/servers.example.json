@@ -1,19 +1,21 @@
 {
+  "_comment": "Copy this file to servers.json and fill in your server info. This file is gitignored.",
   "servers": {
-    "112": { "host": "10.211.211.112", "user": "dems", "password": "win2022@dems", "distro": "debian", "notes": "金华AI, EOL, OpenSSH 7.9p1" },
-    "130": { "host": "10.211.211.130", "user": "dems", "password": "win2022@dems", "distro": "ubuntu", "notes": "虚拟电厂2, Docker 29.3.1" },
-    "161": { "host": "10.211.211.161", "user": "dems", "password": "win2022@dems", "distro": "linx", "notes": "金华主配微, kernel 4.9" },
-    "189": { "host": "10.211.211.189", "user": "dems", "password": "win2022@dems", "distro": "unknown", "notes": "虚拟电厂备机" },
-    "209": { "host": "10.211.211.209", "user": "dems", "password": "win2022@dems", "distro": "ubuntu", "notes": "虚拟电厂主, MySQL/PG/Airflow/Docker" },
-    "225": { "host": "10.211.211.225", "user": "dems", "password": "win2022@dems", "distro": "openeuler", "notes": "openEuler 24.03 LTS, VMware/Docker" }
+    "<name>": {
+      "host": "<IP address>",
+      "user": "<SSH username>",
+      "password": "<SSH password>",
+      "distro": "<ubuntu|debian|openeuler|centos|rhel|linx>",
+      "notes": "<optional description>"
+    }
   },
   "network": {
-    "subnet": "10.211.211.0/24",
-    "gateway": "10.211.211.1",
-    "dns": ["114.114.114.114", "8.8.8.8"]
+    "subnet": "<e.g. 192.168.1.0/24>",
+    "gateway": "<e.g. 192.168.1.1>",
+    "dns": ["<e.g. 8.8.8.8>", "<e.g. 8.8.4.4>"]
   },
   "paths": {
-    "ops_dir": "运维",
-    "ops_rules": "运维/AGENTS_OPS_RULES.md"
+    "ops_dir": "<e.g. ops>",
+    "ops_rules": "<e.g. ops/AGENTS_OPS_RULES.md>"
   }
 }
