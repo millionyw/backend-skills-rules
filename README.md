@@ -2,6 +2,8 @@
 
 > AI 编程助手的技能与规则知识库。每个技能和规则都解决特定的开发、运维或知识管理问题，可直接部署到 Claude Code 或 Trae IDE 使用。
 
+English | **[中文](README_zh.md)**
+
 ## Skills
 
 ### 🖥️ Server Operations
