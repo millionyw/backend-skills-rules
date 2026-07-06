@@ -7,14 +7,14 @@ description: "同步文件到远程服务器。当用户要求同步代码、部
 
 ## 服务器信息
 
-> 以下为示例配置，按实际环境修改 `scripts/sync.py` 顶部的常量即可。
+> 服务器配置从 `config/servers.json` 自动读取。首次使用请运行 `python install.py --config-only` 生成配置文件。
 
-| 项 | 值（示例） |
-|----|-----|
-| IP | 10.211.211.209 |
-| 用户 | dems |
-| 密码 | win2022@dems |
-| 远程根目录 | /home/dems/tsysmart/rtdbpy |
+| 项 | 来源 |
+|----|------|
+| IP | `config/servers.json` → `servers[SERVER_NAME].host` |
+| 用户 | `config/servers.json` → `servers[SERVER_NAME].user` |
+| 密码 | `config/servers.json` → `servers[SERVER_NAME].password` |
+| 远程根目录 | `scripts/sync.py` 顶部 `REMOTE_BASE` 常量 |
 
 ## 使用方式
 

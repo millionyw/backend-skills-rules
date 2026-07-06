@@ -107,7 +107,7 @@ def _escape(cmd):
 ```python
 # ✅ 正确
 result = subprocess.run(
-    ['ssh', 'dems@10.211.211.209', 'find /home/dems -name "*.log"'],
+    ['ssh', 'user@your-server', 'find /home -name "*.log"'],
     capture_output=True, text=True, timeout=30
 )
 

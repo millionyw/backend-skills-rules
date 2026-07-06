@@ -13,3 +13,6 @@ __pycache__/
 *.pyc
 *.pyo
 .venv/
+
+# Config (contains credentials — use .example files as templates)
+config/servers.json

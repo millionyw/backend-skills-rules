@@ -4,6 +4,46 @@
 
 **[English](README.md)** | 中文
 
+## 快速开始
+
+### 安装
+
+```bash
+# 1. 克隆
+git clone https://github.com/your-username/backend-skills-rules.git
+cd backend-skills-rules
+
+# 2. 运行安装向导（生成配置 + 部署技能）
+python install.py
+```
+
+安装向导会依次执行：
+1. **生成 `config/servers.json`** — 你的服务器连接信息（IP、凭据、发行版）
+2. **部署技能** 到 `~/.agents/skills/`（系统级）或 `<项目>/.agents/skills/`（项目级）
+3. **创建符号链接** 到 AGENTS 技能目录（如 `~/.claude/skills/`、`.trae/skills/`）
+
+<details>
+<summary>⚙️ 安装选项</summary>
+
+```bash
+python install.py                  # 完整交互式安装
+python install.py --config-only    # 仅生成 config/servers.json
+python install.py --deploy-only    # 仅部署技能（需配置已存在）
+python install.py --list           # 列出可用技能
+```
+
+**手动配置**：复制模板并编辑：
+```bash
+cp config/servers.example.json config/servers.json
+# 编辑 config/servers.json 填入你的服务器信息
+```
+
+</details>
+
+### 给 AI 助手的指引
+
+> **如果你是 AI 助手**正在阅读本 README：当用户要求安装这些技能时，请从仓库根目录运行 `python install.py`，引导用户完成交互提示。安装完成后，所有技能将通过符号链接在 agent 的技能目录中可用。
+
 ---
 
 ## 技能
@@ -12,14 +52,14 @@
 
 | 技能 | 说明 |
 |------|------|
-| [linux-ssh-ops](skills/linux-ssh-ops/SKILL.md) | **跨发行版 SSH 运维** — 通过 paramiko 统一 Ubuntu/Debian/openEuler/CentOS/Linx 运维操作，防止 heredoc 写坏文件、sudo 卡死、幽灵进程（D 状态）、包管理器选错等常见陷阱。含即用型代码模板和服务器连接索引。 |
-| [sync-to-209](skills/sync-to-209/SKILL.md) | **一键同步文件到远程服务器** — 通过 paramiko 密码登录上传文件/目录，自动递归创建远程目录，验证文件大小一致性，支持同步后远程执行命令。 |
+| [linux-ssh-ops](skills/linux-ssh-ops/SKILL.md) | **跨发行版 SSH 运维** — 通过 paramiko 统一 Ubuntu/Debian/openEuler/CentOS/Linx 运维操作，防止 heredoc 写坏文件、sudo 卡死、幽灵进程（D 状态）、包管理器选错等常见陷阱。服务器信息从 `config/servers.json` 读取。 |
+| [sync-to-209](skills/sync-to-209/SKILL.md) | **一键同步文件到远程服务器** — 通过 paramiko 上传文件/目录，自动递归创建远程目录，验证文件大小一致性，支持同步后远程执行命令。服务器配置从 `config/servers.json` 读取。 |
 
 <details>
 <summary>📁 linux-ssh-ops 参考文件</summary>
 
 - [paramiko-patterns.md](skills/linux-ssh-ops/references/paramiko-patterns.md) — 即用型代码模板（连接、run()、SFTP 写文件、发行版检测、跨平台装包）
-- [servers.md](skills/linux-ssh-ops/references/servers.md) — 服务器连接信息索引（IP / 用户 / 密码 / 发行版）
+- [servers.md](skills/linux-ssh-ops/references/servers.md) — 人类可读的服务器参考（规范数据源：`config/servers.json`）
 - [ssh_run.py](skills/linux-ssh-ops/scripts/ssh_run.py) — 可直接使用的 SSH 操作脚本模板
 
 </details>
@@ -27,7 +67,7 @@
 <details>
 <summary>📁 sync-to-209 参考文件</summary>
 
-- [sync.py](skills/sync-to-209/scripts/sync.py) — 可直接使用的远程同步脚本（修改顶部配置适配不同服务器）
+- [sync.py](skills/sync-to-209/scripts/sync.py) — 可直接使用的远程同步脚本（从 `config/servers.json` 读取服务器配置）
 
 </details>
 
@@ -87,6 +127,10 @@
 
 ```
 backend-skills-rules/
+├── install.py                  # 安装向导（配置生成 + 技能部署）
+├── config/
+│   ├── servers.example.json    # 服务器配置模板（复制 → servers.json）
+│   └── servers.json            # 你的服务器凭据（已 gitignore）
 ├── skills/
 │   ├── linux-ssh-ops/          # 跨发行版 SSH 运维
 │   │   ├── references/         # 代码模板 & 服务器信息
@@ -104,3 +148,27 @@ backend-skills-rules/
     ├── global-behavior-rules.md
     └── AGENTS_OPS_RULES.md
 ```
+
+## 工作原理
+
+技能通过符号链接部署。安装脚本创建两级结构：
+
+```
+~/.agents/skills/                    # 技能中央仓库（或 <项目>/.agents/skills/）
+├── linux-ssh-ops/ → /仓库/skills/linux-ssh-ops/
+├── sync-to-209/   → /仓库/skills/sync-to-209/
+└── ...
+
+~/.claude/skills/                    # Agent 从这里拾取技能
+├── linux-ssh-ops/ → ~/.agents/skills/linux-ssh-ops/
+└── ...
+
+<项目>/.trae/skills/                 # 或项目级
+├── linux-ssh-ops/ → ~/.agents/skills/linux-ssh-ops/
+└── ...
+```
+
+这样的好处：
+- **单一数据源** — git 仓库
+- **多 Agent 共享** — 同一套技能通过符号链接服务多个 AI 工具
+- **更新便捷** — 仓库 `git pull` 即可更新所有已链接的 Agent

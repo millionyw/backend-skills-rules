@@ -20,31 +20,41 @@ Rules enforced by this template:
 """
 
 import paramiko
+import json
 import os
 import sys
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-# Option A: Use server name from servers.md
-SERVER = "225"  # Change this: "112", "130", "161", "189", "209", "225"
+# Option A: Use server name from config/servers.json
+SERVER = "225"  # Change this: use a key from your servers.json
 
 # Option B: Override with direct connection info (takes precedence)
 HOST = None     # e.g., "10.211.211.225"
 PORT = 22
-USER = "dems"
-PWD  = "win2022@dems"
+USER = None     # e.g., "dems"
+PWD  = None     # e.g., "your-password"
 
 LOG  = os.path.join(os.path.dirname(__file__) or ".", "operation.log")
 # ──────────────────────────────────────────────────────────────────────────────
 
-# Server registry
-SERVERS = {
-    "112":  {"host": "10.211.211.112",  "user": "dems", "pwd": "win2022@dems"},
-    "130":  {"host": "10.211.211.130",  "user": "dems", "pwd": "win2022@dems"},
-    "161":  {"host": "10.211.211.161",  "user": "dems", "pwd": "win2022@dems"},
-    "189":  {"host": "10.211.211.189",  "user": "dems", "pwd": "win2022@dems"},
-    "209":  {"host": "10.211.211.209",  "user": "dems", "pwd": "win2022@dems"},
-    "225":  {"host": "10.211.211.225",  "user": "dems", "pwd": "win2022@dems"},
-}
+# Load server registry from config
+def _load_servers():
+    """Load servers from config/servers.json (searches upward to repo root)."""
+    # Walk upward to find config/servers.json
+    current = os.path.dirname(os.path.abspath(__file__))
+    for _ in range(10):
+        candidate = os.path.join(current, "config", "servers.json")
+        if os.path.exists(candidate):
+            with open(candidate, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data.get("servers", {})
+        parent = os.path.dirname(current)
+        if parent == current:
+            break
+        current = parent
+    return {}
+
+SERVERS = _load_servers()
 
 
 def log(msg):
@@ -55,10 +65,13 @@ def log(msg):
 def connect():
     # Resolve server info
     if HOST:
-        host, port, user, pwd = HOST, PORT, USER, PWD
+        host, port, user, pwd = HOST, PORT, USER or "root", PWD or ""
     elif SERVER in SERVERS:
         info = SERVERS[SERVER]
-        host, port, user, pwd = info["host"], 22, info["user"], info["pwd"]
+        host = info["host"]
+        port = 22
+        user = info.get("user", "root")
+        pwd = info.get("password", "")
     else:
         log(f"FATAL: Unknown server '{SERVER}'. Available: {list(SERVERS.keys())}")
         sys.exit(1)

@@ -1,12 +1,13 @@
 # Server Connection Info Index
 
-All servers accessible from the Windows workstation (10.211.211.x network).
+> **Canonical source**: `config/servers.json` (machine-readable, used by scripts).
+> This file is a human-readable reference. If values conflict, `config/servers.json` takes precedence.
 
 ---
 
 ## Server List
 
-| Name | IP | User | Password | Distro | SSH Key | 运维目录 | Notes |
+| Name | IP | User | Password | Distro | SSH Key | Notes |
 |------|-----|------|----------|--------|---------|----------|-------|
 | 112 (金华AI) | 10.211.211.112 | dems | win2022@dems | Debian 10 buster | id_ed25519 (no passphrase) | 运维/112服务器-金华AI-Debian/ | EOL, OpenSSH 7.9p1 |
 | 130 (虚拟电厂2) | 10.211.211.130 | dems | win2022@dems | Ubuntu | — | 运维/130-虚拟电厂2/ | Docker 29.3.1 |

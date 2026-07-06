@@ -4,20 +4,62 @@
 
 English | **[中文](README_zh.md)**
 
+## Quick Start
+
+### Install
+
+```bash
+# 1. Clone
+git clone https://github.com/your-username/backend-skills-rules.git
+cd backend-skills-rules
+
+# 2. Run the install wizard (generates config + deploys skills)
+python install.py
+```
+
+The install wizard will:
+1. **Generate `config/servers.json`** — your server connection info (IPs, credentials, distros)
+2. **Deploy skills** to `~/.agents/skills/` (system-wide) or `<project>/.agents/skills/` (project-local)
+3. **Create symlinks** into your AGENTS skill directories (e.g. `~/.claude/skills/`, `.trae/skills/`)
+
+<details>
+<summary>⚙️ Install options</summary>
+
+```bash
+python install.py                  # Full interactive install
+python install.py --config-only    # Generate config/servers.json only
+python install.py --deploy-only    # Deploy skills only (config must exist)
+python install.py --list           # List available skills
+```
+
+**Manual config**: Copy the template and edit:
+```bash
+cp config/servers.example.json config/servers.json
+# Edit config/servers.json with your server info
+```
+
+</details>
+
+### For AI Assistants
+
+> **If you are an AI assistant** reading this README: when the user wants to install these skills, run `python install.py` from the repo root. Guide the user through the prompts. After installation, all skills will be available in the agent's skill directory via symlinks.
+
+---
+
 ## Skills
 
 ### 🖥️ Server Operations
 
 | Skill | Description |
 |-------|-------------|
-| [linux-ssh-ops](skills/linux-ssh-ops/SKILL.md) | **Cross-distro SSH operations via paramiko** — Prevents heredoc file corruption, sudo hangs, ghost processes (D-state), and wrong package manager across Ubuntu/Debian/openEuler/CentOS/Linx. Includes ready-to-use code templates and server connection index. |
-| [sync-to-209](skills/sync-to-209/SKILL.md) | **One-click file sync to remote server** — Uploads files/directories via paramiko, auto-creates remote dirs, verifies file sizes, and optionally runs post-sync commands. |
+| [linux-ssh-ops](skills/linux-ssh-ops/SKILL.md) | **Cross-distro SSH operations via paramiko** — Prevents heredoc file corruption, sudo hangs, ghost processes (D-state), and wrong package manager across Ubuntu/Debian/openEuler/CentOS/Linx. Includes ready-to-use code templates. Server info loaded from `config/servers.json`. |
+| [sync-to-209](skills/sync-to-209/SKILL.md) | **One-click file sync to remote server** — Uploads files/directories via paramiko, auto-creates remote dirs, verifies file sizes, and optionally runs post-sync commands. Server config from `config/servers.json`. |
 
 <details>
 <summary>📁 linux-ssh-ops references</summary>
 
 - [paramiko-patterns.md](skills/linux-ssh-ops/references/paramiko-patterns.md) — Copy-paste code templates (connect, run, SFTP write, distro detect, cross-platform install)
-- [servers.md](skills/linux-ssh-ops/references/servers.md) — Server connection index (IP / user / password / distro)
+- [servers.md](skills/linux-ssh-ops/references/servers.md) — Human-readable server reference (canonical source: `config/servers.json`)
 - [ssh_run.py](skills/linux-ssh-ops/scripts/ssh_run.py) — Ready-to-use SSH operation script template
 
 </details>
@@ -25,7 +67,7 @@ English | **[中文](README_zh.md)**
 <details>
 <summary>📁 sync-to-209 references</summary>
 
-- [sync.py](skills/sync-to-209/scripts/sync.py) — Ready-to-use remote sync script (edit top config for different servers)
+- [sync.py](skills/sync-to-209/scripts/sync.py) — Ready-to-use remote sync script (reads server config from `config/servers.json`)
 
 </details>
 
@@ -85,6 +127,10 @@ English | **[中文](README_zh.md)**
 
 ```
 backend-skills-rules/
+├── install.py                  # Install wizard (config generation + skill deployment)
+├── config/
+│   ├── servers.example.json    # Server config template (copy → servers.json)
+│   └── servers.json            # Your server credentials (gitignored)
 ├── skills/
 │   ├── linux-ssh-ops/          # Cross-distro SSH operations
 │   │   ├── references/         # Code templates & server info
@@ -102,3 +148,27 @@ backend-skills-rules/
     ├── global-behavior-rules.md
     └── AGENTS_OPS_RULES.md
 ```
+
+## How It Works
+
+Skills are deployed via symlinks. The install script creates a two-level structure:
+
+```
+~/.agents/skills/                    # Central skill store (or <project>/.agents/skills/)
+├── linux-ssh-ops/ → /repo/skills/linux-ssh-ops/
+├── sync-to-209/   → /repo/skills/sync-to-209/
+└── ...
+
+~/.claude/skills/                    # Agent picks up skills from here
+├── linux-ssh-ops/ → ~/.agents/skills/linux-ssh-ops/
+└── ...
+
+<project>/.trae/skills/              # Or project-level
+├── linux-ssh-ops/ → ~/.agents/skills/linux-ssh-ops/
+└── ...
+```
+
+This way:
+- **One source of truth** — the git repo
+- **Multiple agents** share the same skills via symlinks
+- **Updates** — `git pull` in the repo updates all linked agents automatically

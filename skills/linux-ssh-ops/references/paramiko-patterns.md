@@ -324,8 +324,8 @@ host    all       all       127.0.0.1/32          md5
 # TCP loopback IPv6
 host    all       all       ::1/128               md5
 
-# Internal network remote access
-host    all       all       10.211.211.0/24       md5
+# Internal network remote access (adjust subnet from config/servers.json → network.subnet)
+host    all       all       YOUR_SUBNET_HERE      md5
 """
 ```
 
