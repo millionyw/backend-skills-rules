@@ -303,9 +303,9 @@ def diagnose_x11(ssh):
 
 ---
 
-## Rule 10: Follow AGENTS_RULES.md for All Operations
+## Rule 10: Follow AGENTS_OPS_RULES.md for All Operations
 
-**Before any server operation**, read `E:/2026_work_schedule/运维/AGENTS_RULES.md` for:
+**Before any server operation**, read `E:/2026_work_schedule/运维/AGENTS_OPS_RULES.md` for:
 - Directory structure rules (scripts/, reports/, logs/)
 - Ghost process prevention (timeout on all commands)
 - Script execution logging (scripts/script_logs.log)
@@ -323,7 +323,7 @@ When the user asks to do something on a server:
 4. **Detect distro** — call `detect_distro()` to determine package manager
 5. **Execute operations** — use `run()` / `write_remote_file()` with appropriate sudo
 6. **Verify** — always verify after each operation
-7. **Log** — write to log file, follow AGENTS_RULES.md
+7. **Log** — write to log file, follow AGENTS_OPS_RULES.md
 8. **Update docs** — back-feed changes to server README
 
 ---
@@ -333,4 +333,4 @@ When the user asks to do something on a server:
 - `references/paramiko-patterns.md` — Copy-paste code patterns for common operations
 - `references/servers.md` — Server connection info index
 - `scripts/ssh_run.py` — Ready-to-use base template for new operation scripts
-- `E:/2026_work_schedule/运维/AGENTS_RULES.md` — Mandatory operational rules
+- `E:/2026_work_schedule/运维/AGENTS_OPS_RULES.md` — Mandatory operational rules

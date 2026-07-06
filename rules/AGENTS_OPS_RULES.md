@@ -153,7 +153,7 @@ result = subprocess.run(['ssh', '...', 'find ...'], capture_output=True, text=Tr
 
 > 每个智能体在开始运维工作前，**必须**确认以下事项：
 
-- [ ] 已阅读本规范文件（`运维/AGENTS_RULES.md`）
+- [ ] 已阅读本规范文件（`运维/AGENTS_OPS_RULES.md`）
 - [ ] 所有 `.py`/`.sh` 脚本在 `scripts/` 目录中，根目录无散落脚本
 - [ ] 所有 `.log` 文件在 `logs/` 目录中，根目录无散落日志
 - [ ] 所有报告输出到 `reports/` 目录（脚本中已正确指定路径）
