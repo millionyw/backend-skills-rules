@@ -124,6 +124,22 @@ REGISTRY = [
         "config_steps": ["ops_dir"],
         "deploy_rules": False,
     },
+    {
+        "id": 12,
+        "name": "sync-skills-to-repo",
+        "type": "skill",
+        "desc": "同步技能/规则到仓库 (更新 install.py + README + 推送 GitHub)",
+        "config_steps": [],
+        "deploy_rules": False,
+    },
+    {
+        "id": 13,
+        "name": "sync-from-209",
+        "type": "skill",
+        "desc": "从远程服务器同步文件到本地 (远程验证 + 下载 + 大小校验)",
+        "config_steps": ["servers", "sync_remote_base"],
+        "deploy_rules": False,
+    },
 ]
 
 

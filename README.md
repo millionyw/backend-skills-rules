@@ -67,6 +67,7 @@ cp config/servers.example.json config/servers.json
 |-------|-------------|
 | [linux-ssh-ops](skills/linux-ssh-ops/SKILL.md) | **Cross-distro SSH operations via paramiko** — Prevents heredoc file corruption, sudo hangs, ghost processes (D-state), and wrong package manager across Ubuntu/Debian/openEuler/CentOS/Linx. Includes ready-to-use code templates. Server info loaded from `config/servers.json`. |
 | [sync-to-209](skills/sync-to-209/SKILL.md) | **One-click file sync to remote server** — Uploads files/directories via paramiko, auto-creates remote dirs, verifies file sizes, and optionally runs post-sync commands. Server config from `config/servers.json`. |
+| [sync-from-209](skills/sync-from-209/SKILL.md) | **Pull files from remote server to local** — Downloads files/directories via paramiko, verifies remote paths exist before transfer, auto-creates local dirs, verifies file sizes, and optionally runs pre-pull remote commands. Server config from `config/servers.json`. |
 
 <details>
 <summary>📁 linux-ssh-ops references</summary>
@@ -81,6 +82,13 @@ cp config/servers.example.json config/servers.json
 <summary>📁 sync-to-209 references</summary>
 
 - [sync.py](skills/sync-to-209/scripts/sync.py) — Ready-to-use remote sync script (reads server config from `config/servers.json`)
+
+</details>
+
+<details>
+<summary>📁 sync-from-209 references</summary>
+
+- [sync_from.py](skills/sync-from-209/scripts/sync_from.py) — Ready-to-use remote pull script (reads server config from `config/servers.json`)
 
 </details>
 
@@ -100,6 +108,12 @@ cp config/servers.example.json config/servers.json
 | [generating-reports](skills/generating-reports/SKILL.md) | **Context-aware daily/weekly reports** — Generates reports from actual logs and task data; Fridays auto-switch to "next week plan" mode. |
 | [recording-ideas](skills/recording-ideas/SKILL.md) | **Structured idea & experience capture** — Records with category tags (tech / product / ops / AI agent experience) and optional task linking. |
 | [work-log-prompt](skills/work-log-prompt/SKILL.md) | **Never miss a work log** — Prompts to log after each substantial task; uses "purpose-driven" format (why + what), organizes by project/ops category instead of appending. |
+
+### 🔧 Repository Maintenance
+
+| Skill | Description |
+|-------|-------------|
+| [sync-skills-to-repo](skills/sync-skills-to-repo/SKILL.md) | **Sync skills/rules to this repo** — Copies new/modified skills to the repo, updates install.py REGISTRY, updates both READMEs, runs desensitization checks, then commits and pushes to GitHub. |
 
 ---
 
@@ -125,6 +139,7 @@ cp config/servers.example.json config/servers.json
 |---------|-----|
 | SSH to server, install software, change config | `linux-ssh-ops` + `AGENTS_OPS_RULES` |
 | Sync code to remote server | `sync-to-209` |
+| Pull code from remote server to local | `sync-from-209` |
 | Stage code and record changes | `git-add-message` |
 | Full commit workflow (ruff → stage → commit → rebase) | `git-commit` |
 | Create a new task | `managing-tasks` |
@@ -132,6 +147,7 @@ cp config/servers.example.json config/servers.json
 | Generate daily/weekly report | `generating-reports` |
 | Record an idea or experience | `recording-ideas` |
 | Forgot to write work log | `work-log-prompt` + `global-behavior-rules` |
+| Sync skills/rules to this repo | `sync-skills-to-repo` |
 | Ops not following standards | `AGENTS_OPS_RULES` |
 
 ---
@@ -150,13 +166,16 @@ backend-skills-rules/
 │   │   └── scripts/            # Executable script templates
 │   ├── sync-to-209/            # Remote server file sync
 │   │   └── scripts/
+│   ├── sync-from-209/          # Remote server file pull
+│   │   └── scripts/
 │   ├── git-add-message/        # Stage code & update commit message doc
 │   ├── git-commit/             # Full commit workflow
 │   ├── managing-tasks/         # Task creation
 │   ├── tracking-progress/      # Progress alignment
 │   ├── generating-reports/     # Report generation
 │   ├── recording-ideas/        # Idea & experience capture
-│   └── work-log-prompt/        # Work log prompt
+│   ├── work-log-prompt/        # Work log prompt
+│   └── sync-skills-to-repo/   # Sync skills/rules to this repo
 └── rules/
     ├── global-behavior-rules.md
     └── AGENTS_OPS_RULES.md

@@ -67,6 +67,7 @@ cp config/servers.example.json config/servers.json
 |------|------|
 | [linux-ssh-ops](skills/linux-ssh-ops/SKILL.md) | **跨发行版 SSH 运维** — 通过 paramiko 统一 Ubuntu/Debian/openEuler/CentOS/Linx 运维操作，防止 heredoc 写坏文件、sudo 卡死、幽灵进程（D 状态）、包管理器选错等常见陷阱。服务器信息从 `config/servers.json` 读取。 |
 | [sync-to-209](skills/sync-to-209/SKILL.md) | **一键同步文件到远程服务器** — 通过 paramiko 上传文件/目录，自动递归创建远程目录，验证文件大小一致性，支持同步后远程执行命令。服务器配置从 `config/servers.json` 读取。 |
+| [sync-from-209](skills/sync-from-209/SKILL.md) | **从远程服务器拉取文件到本地** — 通过 paramiko 下载文件/目录，传输前验证远程路径存在性，自动创建本地目录，验证文件大小一致性，支持拉取前远程执行命令。服务器配置从 `config/servers.json` 读取。 |
 
 <details>
 <summary>📁 linux-ssh-ops 参考文件</summary>
@@ -81,6 +82,13 @@ cp config/servers.example.json config/servers.json
 <summary>📁 sync-to-209 参考文件</summary>
 
 - [sync.py](skills/sync-to-209/scripts/sync.py) — 可直接使用的远程同步脚本（从 `config/servers.json` 读取服务器配置）
+
+</details>
+
+<details>
+<summary>📁 sync-from-209 参考文件</summary>
+
+- [sync_from.py](skills/sync-from-209/scripts/sync_from.py) — 可直接使用的远程拉取脚本（从 `config/servers.json` 读取服务器配置）
 
 </details>
 
@@ -100,6 +108,12 @@ cp config/servers.example.json config/servers.json
 | [generating-reports](skills/generating-reports/SKILL.md) | **日报/周报编写费时** — 基于实际日志和任务数据上下文感知生成报告，周五自动切换为"下周计划"模式。 |
 | [recording-ideas](skills/recording-ideas/SKILL.md) | **想法/经验无处记录** — 结构化记录想法和经验，支持分类（技术/产品/运维经验/AI Agent 经验）和任务关联。 |
 | [work-log-prompt](skills/work-log-prompt/SKILL.md) | **工作日志容易遗漏** — 完成工作后主动提示记录日志，采用"目的导向"格式（为什么做 + 做了什么），按归属分类整理而非简单追加。 |
+
+### 🔧 仓库维护
+
+| 技能 | 说明 |
+|------|------|
+| [sync-skills-to-repo](skills/sync-skills-to-repo/SKILL.md) | **同步技能/规则到本仓库** — 复制新增/修改的技能到仓库，更新 install.py 注册表，更新中英文 README，脱敏检查后提交并推送到 GitHub。 |
 
 ---
 
@@ -125,6 +139,7 @@ cp config/servers.example.json config/servers.json
 |-------------|------|
 | SSH 到服务器装软件/改配置 | `linux-ssh-ops` + `AGENTS_OPS_RULES` |
 | 同步代码到远程服务器 | `sync-to-209` |
+| 从远程服务器拉取代码到本地 | `sync-from-209` |
 | 暂存代码并记录变更 | `git-add-message` |
 | 提交代码（ruff → 暂存 → commit → rebase） | `git-commit` |
 | 创建一个新任务 | `managing-tasks` |
@@ -149,6 +164,8 @@ backend-skills-rules/
 │   │   ├── references/         # 代码模板 & 服务器信息
 │   │   └── scripts/            # 可执行脚本模板
 │   ├── sync-to-209/            # 远程服务器文件同步
+│   │   └── scripts/
+│   ├── sync-from-209/          # 远程服务器文件拉取
 │   │   └── scripts/
 │   ├── git-add-message/        # 暂存代码 & 更新 commit message 文档
 │   ├── git-commit/             # 完整提交工作流
