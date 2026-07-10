@@ -9,7 +9,6 @@
 路径相对于项目根目录，支持正斜杠或反斜杠。
 """
 import argparse
-import json
 import os
 import sys
 
@@ -18,36 +17,10 @@ try:
 except ImportError:
     sys.exit("[ERROR] 缺少 paramiko，请执行: pip install paramiko")
 
-# ── 服务器配置（自动从 config/servers.json 读取）─────────────────
-
-def _load_server_config(server_name="209"):
-    """从 config/servers.json 读取服务器配置"""
-    current = os.path.dirname(os.path.abspath(__file__))
-    for _ in range(10):
-        candidate = os.path.join(current, "config", "servers.json")
-        if os.path.exists(candidate):
-            with open(candidate, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            servers = data.get("servers", {})
-            if server_name in servers:
-                return servers[server_name]
-            else:
-                sys.exit(f"[ERROR] 服务器 '{server_name}' 未在 config/servers.json 中找到。可用: {list(servers.keys())}")
-        parent = os.path.dirname(current)
-        if parent == current:
-            break
-        current = parent
-    return None
-
-# 默认读取 "209" 服务器配置；如需修改，改下方 SERVER_NAME
-SERVER_NAME = "209"
-_config = _load_server_config(SERVER_NAME) or {}
-
-HOST = _config.get("host", "10.0.0.209")
-USER = _config.get("user", "root")
-PASSWORD = _config.get("password", "")
-REMOTE_BASE = "/home/dems/tsysmart/rtdbpy"  # 按实际项目修改
-# ─────────────────────────────────────────────────────
+HOST = "<IP address>"
+USER = "<USER>"
+PASSWORD = "<PASSWORD>"
+REMOTE_BASE = "<REMOTE_BASE>"
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", "..", ".."))
@@ -174,6 +147,8 @@ def main():
     parser.add_argument("paths", nargs="*", help="要拉取的文件或目录（相对项目根目录）")
     parser.add_argument("-e", "--exec", dest="remote_cmd", default=None,
                         help="拉取前在远程执行的命令")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="仅列出待同步文件，不执行下载")
     args = parser.parse_args()
 
     if not args.paths and not args.remote_cmd:
@@ -202,6 +177,10 @@ def main():
             rel_paths = collect_remote_paths(sftp, args.paths)
             if not rel_paths:
                 print("[WARN] 没有需要拉取的文件（远程路径均不存在或目录为空）")
+            elif args.dry_run:
+                print(f"[DRY-RUN] 共 {len(rel_paths)} 个文件待拉取：")
+                for rel in rel_paths:
+                    print(f"  {rel}")
             else:
                 print(f"[INFO] 共 {len(rel_paths)} 个文件待拉取")
                 ok, failed = sync_files(sftp, rel_paths)

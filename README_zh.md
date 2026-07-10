@@ -67,7 +67,7 @@ cp config/servers.example.json config/servers.json
 |------|------|
 | [linux-ssh-ops](skills/linux-ssh-ops/SKILL.md) | **跨发行版 SSH 运维** — 通过 paramiko 统一 Ubuntu/Debian/openEuler/CentOS/Linx 运维操作，防止 heredoc 写坏文件、sudo 卡死、幽灵进程（D 状态）、包管理器选错等常见陷阱。服务器信息从 `config/servers.json` 读取。 |
 | [sync-to-209](skills/sync-to-209/SKILL.md) | **一键同步文件到远程服务器** — 通过 paramiko 上传文件/目录，自动递归创建远程目录，验证文件大小一致性，支持同步后远程执行命令。服务器配置从 `config/servers.json` 读取。 |
-| [sync-from-209](skills/sync-from-209/SKILL.md) | **从远程服务器拉取文件到本地** — 通过 paramiko 下载文件/目录，传输前验证远程路径存在性，自动创建本地目录，验证文件大小一致性，支持拉取前远程执行命令。服务器配置从 `config/servers.json` 读取。 |
+| [sync-from-209](skills/sync-from-209/SKILL.md) | **从远程服务器拉取文件到本地** — 先 dry-run 列出待同步文件并确认数量，用户同意后再通过 paramiko 下载文件/目录，传输前验证远程路径存在性，自动创建本地目录，验证文件大小一致性，支持拉取前远程执行命令。服务器配置从 `config/servers.json` 读取。 |
 
 <details>
 <summary>📁 linux-ssh-ops 参考文件</summary>

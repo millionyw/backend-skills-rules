@@ -136,7 +136,7 @@ REGISTRY = [
         "id": 13,
         "name": "sync-from-209",
         "type": "skill",
-        "desc": "从远程服务器同步文件到本地 (远程验证 + 下载 + 大小校验)",
+        "desc": "从远程服务器同步文件到本地 (dry-run 确认 + 远程验证 + 下载 + 大小校验)",
         "config_steps": ["servers", "sync_remote_base"],
         "deploy_rules": False,
     },

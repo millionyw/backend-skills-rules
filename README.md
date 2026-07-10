@@ -67,7 +67,7 @@ cp config/servers.example.json config/servers.json
 |-------|-------------|
 | [linux-ssh-ops](skills/linux-ssh-ops/SKILL.md) | **Cross-distro SSH operations via paramiko** — Prevents heredoc file corruption, sudo hangs, ghost processes (D-state), and wrong package manager across Ubuntu/Debian/openEuler/CentOS/Linx. Includes ready-to-use code templates. Server info loaded from `config/servers.json`. |
 | [sync-to-209](skills/sync-to-209/SKILL.md) | **One-click file sync to remote server** — Uploads files/directories via paramiko, auto-creates remote dirs, verifies file sizes, and optionally runs post-sync commands. Server config from `config/servers.json`. |
-| [sync-from-209](skills/sync-from-209/SKILL.md) | **Pull files from remote server to local** — Downloads files/directories via paramiko, verifies remote paths exist before transfer, auto-creates local dirs, verifies file sizes, and optionally runs pre-pull remote commands. Server config from `config/servers.json`. |
+| [sync-from-209](skills/sync-from-209/SKILL.md) | **Pull files from remote server to local** — Dry-run first to list files and confirm count with user, then downloads files/directories via paramiko, verifies remote paths exist before transfer, auto-creates local dirs, verifies file sizes, and optionally runs pre-pull remote commands. Server config from `config/servers.json`. |
 
 <details>
 <summary>📁 linux-ssh-ops references</summary>
