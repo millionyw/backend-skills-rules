@@ -96,7 +96,7 @@ cp config/servers.example.json config/servers.json
 
 | Skill | Description |
 |-------|-------------|
-| [git-add-message](skills/git-add-message/SKILL.md) | **Keep staged files in sync with change log** — Auto-collects modified files in session, asks to stage, groups by feature, and appends commit message entries to a change document. |
+| [git-add-message](skills/git-add-message/SKILL.md) | **Keep staged files in sync with change log** — Auto-collects modified files in session, asks to stage, groups by feature, and appends commit message entries to a change document. Only performs `git add` and doc updates; never runs `git commit`. |
 | [git-commit](skills/git-commit/SKILL.md) | **Full commit workflow** — ruff fix → per-file staging (excludes LOCAL_ONLY_FILES) → reads commit message doc → commit → fetch/rebase, preserving local rule files on conflict. |
 
 ### 📋 Project & Work Management
