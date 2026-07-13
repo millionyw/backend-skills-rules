@@ -56,7 +56,7 @@ REGISTRY = [
         "id": 3,
         "name": "git-add-message",
         "type": "skill",
-        "desc": "暂存代码并生成 commit message 条目（禁止 git commit）",
+        "desc": "暂存代码并生成 commit message 条目（智能合并已有条目，禁止 git commit）",
         "config_steps": [],
         "deploy_rules": False,
     },

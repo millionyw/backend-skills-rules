@@ -96,7 +96,7 @@ cp config/servers.example.json config/servers.json
 
 | 技能 | 说明 |
 |------|------|
-| [git-add-message](skills/git-add-message/SKILL.md) | **暂存代码与变更记录脱节** — 自动收集会话改动文件、询问暂存、按功能分组生成 commit message 条目并追加到变更文档，确保每次改动都有据可查。仅执行 `git add` 和文档写入，禁止执行 `git commit`。 |
+| [git-add-message](skills/git-add-message/SKILL.md) | **暂存代码与变更记录脱节** — 自动收集会话改动文件、询问暂存、按功能分组生成 commit message 条目并写入变更文档，智能合并到已有相关条目而非简单追加。仅执行 `git add` 和文档写入，禁止执行 `git commit`。 |
 | [git-commit](skills/git-commit/SKILL.md) | **完整提交流程** — ruff 修复 → 逐文件暂存（排除 LOCAL_ONLY_FILES）→ 读取 commit message 文档 → 提交 → fetch/rebase，冲突时保留本地规则文件。 |
 
 ### 📋 项目管理与工作记录
