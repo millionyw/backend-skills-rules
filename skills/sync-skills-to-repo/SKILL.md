@@ -58,10 +58,25 @@ BACKEND_SKILLS_REPO=D:\my_homework\backend-skills-rules
 | 技能 | 技能所在目录（含 SKILL.md、references/、scripts/ 等） | `$REPO/skills/<name>/` |
 | 规则 | 规则 .md 文件 | `$REPO/rules/<name>.md` |
 
-- 如果目标已存在，**覆盖更新**（用新版本替换旧版本）
+- 如果目标已存在，**先删除目标目录再复制**（避免 `cp -r` 产生嵌套目录）
 - 如果目标不存在，**新建目录/文件**
 
-复制方式：使用 Bash 的 `cp -r`（技能目录）或 `cp`（规则文件），确保所有子目录和文件都被复制。
+复制方式：
+
+**技能目录**：先删除目标目录，再复制源目录内容，确保不会嵌套：
+```bash
+# 先删除目标目录（避免 cp -r 嵌套问题）
+rm -rf $REPO/skills/<name>/
+# 复制源目录内容到目标位置
+cp -r <源目录>/ $REPO/skills/<name>/
+```
+
+**规则文件**：直接覆盖：
+```bash
+cp <源文件> $REPO/rules/<name>.md
+```
+
+**⚠️ 嵌套目录陷阱**：当目标目录已存在时，`cp -r <源>/ <目标>/` 会将源目录作为子目录放入目标中，产生 `<目标>/<源目录名>/SKILL.md` 的嵌套结构。必须先 `rm -rf` 目标目录再复制。
 
 ### 步骤三：脱敏检查
 
