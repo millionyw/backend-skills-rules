@@ -153,17 +153,19 @@ cp <源文件> $REPO/rules/<name>.md
 
 ### 步骤八：Git 提交并推送到 GitHub
 
-在仓库目录执行以下操作：
+**⚠️ 安全前置检查**：所有 git 命令必须在 `$REPO`（backend-skills-rules 仓库根目录）下执行。执行前必须通过 Bash 的 `cd` 切换到 `$REPO` 目录，并用 `pwd` 确认当前工作目录正确，避免误操作其他仓库的暂存区。
 
 ```bash
-cd $REPO    # $REPO = 仓库根目录（见"仓库位置"）
+# 0. 确认工作目录（必须！）
+cd $REPO && pwd    # 输出必须包含 backend-skills-rules
 
 # 1. 查看变更
 git status
 git diff --stat
 
-# 2. 暂存所有变更
-git add -A
+# 2. 仅暂存本次同步涉及的文件（禁止 git add -A！）
+git add skills/<name>/ install.py README.md README_zh.md
+# 如果是规则：git add rules/<name>.md install.py README.md README_zh.md
 
 # 3. 提交（commit message 列出新增/修改的技能和规则）
 git commit -m "Add/update <skill-name>: <简短描述>
@@ -175,12 +177,15 @@ git push origin master
 ```
 
 **关键**：
+- **禁止使用 `git add -A` 或 `git add .`**：这会暂存仓库中所有变更文件，可能误暂存无关内容。必须逐文件指定本次同步涉及的文件路径。
 - commit message 必须列出具体新增/修改的技能和规则名称
-- 推送前确认 `git status` 显示的变更符合预期
+- 推送前确认 `git status` 显示的变更仅包含本次同步涉及的文件
 - 推送后告知用户 GitHub 仓库已更新，附上仓库链接：https://github.com/millionyw/backend-skills-rules
 
 ## 约束
 
+- **禁止使用 `git add -A` / `git add .`**：必须逐文件指定暂存路径，避免误暂存无关文件到其他仓库
+- **所有 git 命令执行前必须 `cd $REPO && pwd` 确认工作目录**：防止在错误仓库下执行 git 操作
 - 所有文件操作必须基于实际对话，不能编造技能内容
 - 脱敏检查不能跳过，即使文件是从仓库自身复制的
 - 更新 install.py 时不能破坏已有的 REGISTRY 条目（只能新增或更新 desc 字段）
