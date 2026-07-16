@@ -114,6 +114,7 @@ cp config/servers.example.json config/servers.json
 | Skill | Description |
 |-------|-------------|
 | [sync-skills-to-repo](skills/sync-skills-to-repo/SKILL.md) | **Sync skills/rules to this repo** — Copies new/modified skills to the repo, updates install.py REGISTRY, updates both READMEs, runs desensitization checks, then commits and pushes to GitHub. |
+| [orm-diff](skills/orm-diff/SKILL.md) | **ORM model vs database table structure diff** — Scans SQLAlchemy ORM models, connects to PostgreSQL, compares all column attributes (name, type, nullable, default, primary_key), outputs console diff report. |
 
 ---
 
@@ -148,6 +149,7 @@ cp config/servers.example.json config/servers.json
 | Record an idea or experience | `recording-ideas` |
 | Forgot to write work log | `work-log-prompt` + `global-behavior-rules` |
 | Sync skills/rules to this repo | `sync-skills-to-repo` |
+| ORM model vs DB table diff | `orm-diff` |
 | Ops not following standards | `AGENTS_OPS_RULES` |
 
 ---
@@ -175,7 +177,9 @@ backend-skills-rules/
 │   ├── generating-reports/     # Report generation
 │   ├── recording-ideas/        # Idea & experience capture
 │   ├── work-log-prompt/        # Work log prompt
-│   └── sync-skills-to-repo/   # Sync skills/rules to this repo
+│   ├── sync-skills-to-repo/   # Sync skills/rules to this repo
+│   └── orm-diff/              # ORM vs DB table structure diff
+│       └── scripts/
 └── rules/
     ├── global-behavior-rules.md
     └── AGENTS_OPS_RULES.md

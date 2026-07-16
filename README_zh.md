@@ -114,6 +114,7 @@ cp config/servers.example.json config/servers.json
 | 技能 | 说明 |
 |------|------|
 | [sync-skills-to-repo](skills/sync-skills-to-repo/SKILL.md) | **同步技能/规则到本仓库** — 复制新增/修改的技能到仓库，更新 install.py 注册表，更新中英文 README，脱敏检查后提交并推送到 GitHub。 |
+| [orm-diff](skills/orm-diff/SKILL.md) | **ORM 模型与数据库表结构对比** — 扫描 SQLAlchemy ORM 模型，连接 PostgreSQL 读取实际表结构，全属性对比（列名、类型、nullable、default、primary_key），输出控制台差异报告。 |
 
 ---
 
@@ -147,6 +148,7 @@ cp config/servers.example.json config/servers.json
 | 生成日报/周报 | `generating-reports` |
 | 记录一个想法或经验 | `recording-ideas` |
 | 忘了写工作日志 | `work-log-prompt` + `global-behavior-rules` |
+| ORM 模型与数据库表结构不一致 | `orm-diff` |
 | 运维操作不规范 | `AGENTS_OPS_RULES` |
 
 ---
@@ -173,7 +175,10 @@ backend-skills-rules/
 │   ├── tracking-progress/      # 进度对齐
 │   ├── generating-reports/     # 报告生成
 │   ├── recording-ideas/        # 想法 & 经验记录
-│   └── work-log-prompt/        # 工作日志提示
+│   ├── work-log-prompt/        # 工作日志提示
+│   ├── sync-skills-to-repo/   # 同步技能/规则到本仓库
+│   └── orm-diff/              # ORM 与数据库表结构对比
+│       └── scripts/
 └── rules/
     ├── global-behavior-rules.md
     └── AGENTS_OPS_RULES.md

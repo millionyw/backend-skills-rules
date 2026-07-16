@@ -140,6 +140,14 @@ REGISTRY = [
         "config_steps": ["servers", "sync_remote_base"],
         "deploy_rules": False,
     },
+    {
+        "id": 14,
+        "name": "orm-diff",
+        "type": "skill",
+        "desc": "ORM 模型 vs 数据库表结构全属性对比 (列名、类型、nullable、default、primary_key)",
+        "config_steps": [],
+        "deploy_rules": False,
+    },
 ]
 
 
