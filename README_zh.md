@@ -108,6 +108,7 @@ cp config/servers.example.json config/servers.json
 | [generating-reports](skills/generating-reports/SKILL.md) | **日报/周报编写费时** — 基于实际日志和任务数据上下文感知生成报告，周五自动切换为"下周计划"模式。 |
 | [recording-ideas](skills/recording-ideas/SKILL.md) | **想法/经验无处记录** — 结构化记录想法和经验，支持分类（技术/产品/运维经验/AI Agent 经验）和任务关联。 |
 | [work-log-prompt](skills/work-log-prompt/SKILL.md) | **工作日志容易遗漏** — 完成工作后主动提示记录日志，采用"目的导向"格式（为什么做 + 做了什么），按归属分类整理而非简单追加。 |
+| [llm-wiki](skills/llm-wiki/SKILL.md) | **个人 LLM 知识库维护（Karpathy LLM Wiki 模式）** — 将原始源（任务/日志/周报/运维文档）摄取为 Obsidian vault 中互相链接的 wiki 页面；查询带来源引用并归档答案；健康检查（死链、孤儿页、过期与矛盾页面）。依赖 `obsidian-markdown` 技能提供语法规范。 |
 
 ### 🔧 仓库维护
 
@@ -148,6 +149,7 @@ cp config/servers.example.json config/servers.json
 | 生成日报/周报 | `generating-reports` |
 | 记录一个想法或经验 | `recording-ideas` |
 | 忘了写工作日志 | `work-log-prompt` + `global-behavior-rules` |
+| 摄取/查询/体检个人知识库 wiki | `llm-wiki` |
 | ORM 模型与数据库表结构不一致 | `orm-diff` |
 | 运维操作不规范 | `AGENTS_OPS_RULES` |
 
@@ -176,6 +178,7 @@ backend-skills-rules/
 │   ├── generating-reports/     # 报告生成
 │   ├── recording-ideas/        # 想法 & 经验记录
 │   ├── work-log-prompt/        # 工作日志提示
+│   ├── llm-wiki/               # 个人 LLM 知识库（wiki）维护
 │   ├── sync-skills-to-repo/   # 同步技能/规则到本仓库
 │   └── orm-diff/              # ORM 与数据库表结构对比
 │       └── scripts/

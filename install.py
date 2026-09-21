@@ -148,6 +148,14 @@ REGISTRY = [
         "config_steps": [],
         "deploy_rules": False,
     },
+    {
+        "id": 15,
+        "name": "llm-wiki",
+        "type": "skill",
+        "desc": "个人 LLM 知识库维护 (Karpathy LLM Wiki 模式：摄取/查询/lint，依赖 obsidian-markdown)",
+        "config_steps": [],
+        "deploy_rules": False,
+    },
 ]
 
 

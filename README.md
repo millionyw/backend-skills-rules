@@ -108,6 +108,7 @@ cp config/servers.example.json config/servers.json
 | [generating-reports](skills/generating-reports/SKILL.md) | **Context-aware daily/weekly reports** — Generates reports from actual logs and task data; Fridays auto-switch to "next week plan" mode. |
 | [recording-ideas](skills/recording-ideas/SKILL.md) | **Structured idea & experience capture** — Records with category tags (tech / product / ops / AI agent experience) and optional task linking. |
 | [work-log-prompt](skills/work-log-prompt/SKILL.md) | **Never miss a work log** — Prompts to log after each substantial task; uses "purpose-driven" format (why + what), organizes by project/ops category instead of appending. |
+| [llm-wiki](skills/llm-wiki/SKILL.md) | **Personal LLM knowledge base maintenance (Karpathy LLM Wiki pattern)** — Ingests raw sources (tasks/logs/reports/ops docs) into an Obsidian vault as linked wiki pages, answers queries with source citations and archives them, runs health checks (broken wikilinks, orphans, stale/contradictory pages). Requires the `obsidian-markdown` skill for syntax conventions. |
 
 ### 🔧 Repository Maintenance
 
@@ -148,6 +149,7 @@ cp config/servers.example.json config/servers.json
 | Generate daily/weekly report | `generating-reports` |
 | Record an idea or experience | `recording-ideas` |
 | Forgot to write work log | `work-log-prompt` + `global-behavior-rules` |
+| Ingest/query/lint personal knowledge wiki | `llm-wiki` |
 | Sync skills/rules to this repo | `sync-skills-to-repo` |
 | ORM model vs DB table diff | `orm-diff` |
 | Ops not following standards | `AGENTS_OPS_RULES` |
@@ -177,6 +179,7 @@ backend-skills-rules/
 │   ├── generating-reports/     # Report generation
 │   ├── recording-ideas/        # Idea & experience capture
 │   ├── work-log-prompt/        # Work log prompt
+│   ├── llm-wiki/               # Personal LLM knowledge base (wiki) maintenance
 │   ├── sync-skills-to-repo/   # Sync skills/rules to this repo
 │   └── orm-diff/              # ORM vs DB table structure diff
 │       └── scripts/
